@@ -1,10 +1,7 @@
 ![Webpack Extractor](./images/banner.png)
-A tool that retrieves source files in plain text from a project's sourcemap.
-
 
 # Description
 **Webpack extractor** retrieves source code files directly from webpack and recreates the tree on the file system.  
-
 The script takes a URL or a local file as input.
 
 ![Execution](./images/execution2.png)
@@ -27,8 +24,8 @@ Extracting source files from a webpack
 options:
   -h, --help            show this help message and exit
   -s, --silent          Decrease output verbosity
-  -u URL, --url URL     Url to get the sourcemap from
-  -f FILE, --file FILE  Local file to get the sourcemap from
+  -u URL, --url URL     Url to get the mapping from
+  -f FILE, --file FILE  Local file to get the mapping from
 ```
 
 **Exemples**  
@@ -44,11 +41,11 @@ $> for url in $(cat urls.lst); do python webpack_extractor.py -u $url -s; done
 ```
 
 **With the help of BurpSuite**
-1. Filter your proxy history by file extension `map`
+1. Filter your proxy history by file extension `map`  
 ![Filter](./images/burpsuite_filter.png)
-2. Select all the urls and copy them to a file
+2. Select all the urls and copy them to a file  
 ![Copy](./images/burpsuite_urls.png)
-3. Run the tool in a 'for' loop
+3. Run the tool in a 'for' loop  
   ```bash
   for url in $(cat urls.lst); do python webpack_extractor.py -u $url -s; done
   ```

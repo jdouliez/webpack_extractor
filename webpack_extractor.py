@@ -15,8 +15,8 @@ def usage():
 parser = argparse.ArgumentParser(description="Extracting source files from a webpack")
 parser.add_argument("-s", "--silent", help="Decrease output verbosity", action="store_true")  #True/False
 group = parser.add_mutually_exclusive_group()
-group.add_argument("-u", "--url", dest="url", help="Url to get the sourcemap from")
-group.add_argument("-f", "--file", dest="file", help="Local file to get the sourcemap from")
+group.add_argument("-u", "--url", dest="url", help="Url to get the mapping from")
+group.add_argument("-f", "--file", dest="file", help="Local file to get the mapping from")
 args = parser.parse_args()
 
 
