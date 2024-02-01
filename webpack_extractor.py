@@ -56,7 +56,7 @@ def main():
     files = []
     if json_data:
         for index, source in enumerate(json_data['sources']):
-            dir_path = os.path.dirname(source).replace("webpack://", "webpack/")
+            dir_path = "./" + os.path.dirname(source).replace("webpack://", "webpack/")
             
             if not os.path.isdir(dir_path):
                 os.makedirs(dir_path, exist_ok=True)
