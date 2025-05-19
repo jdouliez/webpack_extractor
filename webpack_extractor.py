@@ -14,9 +14,12 @@ def usage():
 
 parser = argparse.ArgumentParser(description="Extracting source files from a webpack")
 parser.add_argument("-s", "--silent", help="Decrease output verbosity", action="store_true")  #True/False
+parser.add_argument("-H", "--headers", help="Additional HTTP headers (separated with ',')")
+
 group = parser.add_mutually_exclusive_group()
 group.add_argument("-u", "--url", dest="url", help="Url to get the mapping from")
 group.add_argument("-f", "--file", dest="file", help="Local file to get the mapping from")
+
 args = parser.parse_args()
 
 
@@ -24,7 +27,16 @@ if not (args.url or args.file):
     usage()
 
 
-def get_json_data():
+def get_json_data(headers=None):
+
+    local_headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36'}
+
+    if headers:
+        for header in headers.split(","):
+            if ":" in header:
+                key, value = header.split(":", 1)
+                local_headers[key.strip()] = value.strip()
+    
 
     if args.file and os.path.exists(args.file):
         print(f"{Fore.YELLOW}[>] Using local file \"{args.file}\"")
@@ -36,7 +48,7 @@ def get_json_data():
         print(f"{Fore.YELLOW}[>] Using url \"{args.url}\"{Style.RESET_ALL}")        
 
         try:
-            response = requests.get(args.url, verify=False, timeout=15)
+            response = requests.get(args.url, verify=False, timeout=15, headers=local_headers)
             return response.json()
         except:
             print(f"{Fore.RED}[-] The url does not provid valid json data.{Style.RESET_ALL}")
@@ -51,7 +63,8 @@ def main():
     if len(sys.argv) == 1:
         usage()
 
-    json_data = get_json_data()
+
+    json_data = get_json_data(args.headers)
 
     files = []
     if json_data:
